@@ -104,6 +104,18 @@ const eventRegister = async (req, res) => {
   }
 };
 
+//Get attendees for each event
+const getEachAttendee = async (req, res) => {
+    const eventId = req.params.eventId; // Assuming eventId is the parameter name in your route
+    try {
+        // Find attendees based on the event ID
+        const attendees = await Attendee.find({ event: eventId }).populate('attendee');
+        res.json(attendees);
+    } catch (error) {
+        console.error('Error getting event attendees:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+};
 //Deregister for an event
 
 const eventDeregister = async(req,res) =>{
@@ -124,13 +136,15 @@ const eventDeregister = async(req,res) =>{
       }
     };
 
-//Get attendees
+//Get attendees for all events
 const getEventAttendees = async (req, res) => {
     try {
-        const attendee = await Attendee.find();
-        res.json(attendee);
+        const attendees = await Attendee.find()
+            .populate('attendee', 'name') // Populate attendee field with name from User collection
+            .populate('event', 'eventName'); // Populate event field with eventName from Event collection
+        res.json(attendees);
     } catch (error) {
-        console.error('Error getting all events:', error);
+        console.error('Error getting event attendees:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
@@ -154,4 +168,4 @@ const deleteAttendee = async (req, res) => {
 
 
 
-export { createEvent, updateEvent, deleteEvent, getEventById, getAllEvents, eventRegister, eventDeregister, getEventAttendees,deleteAttendee };
+export { createEvent, updateEvent, deleteEvent, getEventById, getAllEvents, eventRegister, eventDeregister, getEventAttendees,deleteAttendee, getEachAttendee };

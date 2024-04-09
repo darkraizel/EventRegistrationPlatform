@@ -1,6 +1,6 @@
 
 import express from "express";
-import {createEvent, updateEvent, deleteEvent, getEventById, getAllEvents, eventRegister , eventDeregister, getEventAttendees } from "../controllers/eventController.js";
+import {createEvent, updateEvent, deleteEvent, getEventById, getAllEvents, eventRegister , eventDeregister,  getEachAttendee } from "../controllers/eventController.js";
 import verifyToken from '../authMiddleware/authJWT.js';
 
 
@@ -24,6 +24,11 @@ router.get("/", getAllEvents);
 
 //attendee
 router.post("/:eventId/register", verifyToken , eventRegister )
+
+//attendees for event
+router.get('/:eventId/attendees', getEachAttendee);
+
+router.delete('/:eventId/deregister', verifyToken,  eventDeregister)
 
 
 

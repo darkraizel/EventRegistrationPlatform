@@ -7,7 +7,7 @@ function Navbar() {
         // Clear JWT token from localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('role');
-        localStorage.removeItem('id');
+        localStorage.removeItem('_id');
     };
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

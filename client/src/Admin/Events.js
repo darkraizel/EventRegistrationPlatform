@@ -41,7 +41,6 @@ function Events(){
                       <th>Id</th>
                       <th>Event Name</th>
                       <th>Location</th>
-                      <th>Organizer</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -51,7 +50,6 @@ function Events(){
                         <td>{d._id}</td>
                         <td>{d.eventName}</td>
                         <td>{d.location}</td>
-                        <td>{d.organizer}</td>
                         <td>
                           <Link to={`/edit/${d._id}`} className='btn btn-sm btn-primary me-2'>Edit</Link>                   
                             <button onClick={() => handleDelete(d._id)} className='btn btn-sm btn-danger'>Delete</button>
