@@ -77,6 +77,7 @@ function Read() {
             console.error('Error unsubscribing:', error.response ? error.response.data.message : error.message);
         }
     };
+    const formattedDate = new Date(data.date).toLocaleDateString();
 
     return (
         <div>
@@ -92,7 +93,7 @@ function Read() {
                         <strong>Description: {data.description}</strong>
                     </div>
                     <div className='mb-2'>
-                        <strong>Date: {data.date}</strong>
+                        <strong>Date: {formattedDate}</strong>
                     </div>
                     <div className='mb-2'>
                         <strong>Location: {data.location}</strong>
