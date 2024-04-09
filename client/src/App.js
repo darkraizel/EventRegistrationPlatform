@@ -5,7 +5,6 @@ import Home from './Home';
 import Create from './Event/Create';
 import Read from './Event/Read';
 import Edit from './Event/Edit';
-import Attendee from './Event/Attendee';
 import Users from './Users/Users';
 import UserEdit from './Users/userEdit'
 import Events from './Admin/Events';
@@ -38,6 +37,7 @@ export const ProtectedRoute = ({ element, admin, ...rest }) => {
 
 function App() {
   return (
+
     <Router>
       <Routes>
         <Route path='/register' element={<Signup />} />
@@ -47,7 +47,6 @@ function App() {
         <Route path="/create" element={<ProtectedRoute element={<Create />} />} />
         <Route path="/read/:_id" element={<ProtectedRoute element={<Read />} />} />
         <Route path="/edit/:_id" element={<ProtectedRoute element={<Edit />} />} />
-        <Route path="/attendee" element={<ProtectedRoute element={<Attendee />} />} />
         <Route path="/users" element={<ProtectedRoute element={<Users />} admin />} />
         <Route path="/events" element={<ProtectedRoute element={<Events />} admin />} />
         <Route path="/attendees" element={<ProtectedRoute element={<Attendees />} admin />} />

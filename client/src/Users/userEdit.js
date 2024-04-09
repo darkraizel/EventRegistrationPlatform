@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -33,13 +35,18 @@ function UserEdit() {
         axios.put(`http://localhost:8800/api/user/${userId}`, values)
             .then(res => {
                 console.log(res);
-                navigate('/admin/users');
+                setTimeout(() => {
+                    navigate('/admin/users');
+                }, 1500); 
+                toast.success("User updated Successfully!");
             })
             .catch(err => console.log(err));
     };
     
     return (
+        
         <div className='vh-150 d-flex justify-content-center align-items-center'>
+            <ToastContainer/>
     <div className='w-100 w-md-75 border bg-white shadow px-5 py-4 rounded'>
         <h1 className="mb-4">Edit User</h1>
         <form onSubmit={handleUpdate}>

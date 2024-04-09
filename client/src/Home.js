@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import Navbar from "./navbar";
 import Sidebar from "./Admin/Sidebar";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function Home() {
     const [data, setData] = useState([]);
     const [userId, setUserId] = useState('');
@@ -19,6 +21,7 @@ function Home() {
         axios.get('http://localhost:8800/api/event')
             .then(res => setData(res.data))
             .catch(err => console.log(err));
+           
     }, []);
 
     const handleDelete = (_id) => {
@@ -28,11 +31,14 @@ function Home() {
                 .then(res => {
                     setData(prevData => prevData.filter(event => event._id !== _id));
                 }).catch(err => console.log(err));
+                toast.info("Event deleted successfully!")
+
         }
     }
 
     return (
         <div>
+          <ToastContainer />
           <Navbar />
           <div className="d-flex">
             {isAdmin && <Sidebar />} 
@@ -45,7 +51,6 @@ function Home() {
                 <table className='table table-striped'>
                   <thead>
                     <tr>
-                      <th>Id</th>
                       <th>Event Name</th>
                       <th>Location</th>
                       <th>Action</th>
@@ -54,7 +59,6 @@ function Home() {
                   <tbody>
                     {data.map((d, i) => (
                       <tr key={i}>
-                        <td>{d._id}</td>
                         <td>{d.eventName}</td>
                         <td>{d.location}</td>
                         <td>

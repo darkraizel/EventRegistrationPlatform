@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
     const [name, setName] = useState()
@@ -31,17 +31,18 @@ function Login() {
       } else {
         navigate('/home');
       }
-    } else {
-      console.error('Login failed: Invalid credentials');
     }
   })
   .catch((error) => {
     console.error('Login failed:', error.response ? error.response.data.message : error.message);
+    toast.error('Wrong username or password!')
   });
     }
   
     return (
+      
       <div className="signup-container d-flex justify-content-center align-items-center vh-100">
+        <ToastContainer />
           <div className="w-40 p-5 rounded border text-center">
               <h2>Login</h2>
               <form className="signup-form" onSubmit={handleSubmit}>

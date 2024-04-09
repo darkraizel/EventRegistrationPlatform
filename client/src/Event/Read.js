@@ -1,30 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../navbar";
 
 function Read() {
-    
     const [data, setData] = useState({});
     const [attendees, setAttendees] = useState([]);
     const [organizerName, setOrganizerName] = useState('');
     const { _id } = useParams();
-    const navigate = useNavigate();
-   
+
     useEffect(() => {
-        // Fetch event details
         axios.get(`http://localhost:8800/api/event/` + _id)
             .then(res => setData(res.data))
             .catch(error => console.error('Error fetching event details:', error));
 
-        // Fetch attendees
         axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
             .then(res => setAttendees(res.data))
             .catch(error => console.error('Error fetching attendees:', error));
     }, [_id]);
 
     useEffect(() => {
-        // Fetch organizer name
         if (data.organizer) {
             axios.get(`http://localhost:8800/api/user/` + data.organizer)
                 .then(res => setOrganizerName(res.data.name))
@@ -40,45 +37,50 @@ function Read() {
                 return;
             }
         
-            const response = await axios.post(`http://localhost:8800/api/event/${_id}/register`, {}, {
+            await axios.post(`http://localhost:8800/api/event/${_id}/register`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            console.log(response.data);
-            navigate("/home");
-            
+
+            toast.success("Registered successfully!");
+
+            axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
+                .then(res => setAttendees(res.data))
+                .catch(error => console.error('Error refreshing attendees:', error));
         } catch (error) {
             console.error('Error attending event:', error.response ? error.response.data.message : error.message);
+            toast.error("You have already been registered to this event!");
+        }
+    };
+      
+    const handleUnsubscribe = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Error unsubscribing: Token not found in local storage');
+                return;
+            }
+
+            await axios.delete(`http://localhost:8800/api/event/${_id}/deregister`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            toast.info("Unsubscribed successfully!");
+            
+            axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
+                .then(res => setAttendees(res.data))
+                .catch(error => console.error('Error refreshing attendees:', error));
+        } catch (error) {
+            console.error('Error unsubscribing:', error.response ? error.response.data.message : error.message);
         }
     };
 
-    const handleUnsubscribe = async () => {
-      try {
-          const token = localStorage.getItem('token');
-          if (!token) {
-              console.error('Error unsubscribing: Token not found in local storage');
-              return;
-          }
-
-          const response = await axios.delete(`http://localhost:8800/api/event/${_id}/deregister`, {
-              headers: {
-                  'Authorization': `Bearer ${token}`
-              }
-          });
-          console.log(response.data);
-          // After successful unsubscribe, refresh attendees list
-          axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
-              .then(res => setAttendees(res.data))
-              .catch(error => console.error('Error refreshing attendees:', error));
-      } catch (error) {
-          console.error('Error unsubscribing:', error.response ? error.response.data.message : error.message);
-      }
-      navigate("/home")
-  };
-
     return (
         <div>
+            <ToastContainer />
             <Navbar />
             <div className='d-flex w-60 vh-100 justify-content-center align-items-center bg-light'>
                 <div className='w-40 border bg-white shadow px-5 pt-3 pb-5 rounded'>

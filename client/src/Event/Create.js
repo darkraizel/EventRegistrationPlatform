@@ -2,6 +2,8 @@ import React,  { useState } from   "react";
 import { Link , useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import Navbar from "../navbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -22,17 +24,24 @@ function Create() {
         axios.post('http://localhost:8800/api/event', values, {
             headers: {
                 'Authorization': `Bearer ${token}` 
-            }
+            } 
         })
         .then(res => {
             console.log(res.data);
-            navigate('/home');
+            setTimeout(() => {
+                navigate('/home');
+            }, 1500); 
+            toast.success("Event created Successfully!");
         })
-        .catch(err => console.log(err));
-    }
+        .catch(err => {
+            console.error("Error creating event:", err);
+            toast.error("Error creating event. Please fill out the form!");
+        });
+    };
 
     return(
         <div>
+            <ToastContainer/>
             <Navbar />
         
           

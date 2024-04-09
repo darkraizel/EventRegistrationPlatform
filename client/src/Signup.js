@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Signup() {
     const [name, setName] = useState()
@@ -15,12 +17,17 @@ function Signup() {
         axios.post('http://localhost:8800/api/auth/register', {name, email, password})
         .then(result => {
             console.log(result)
-            navigate('/login')
+            setTimeout(() => {
+                navigate('/login');
+            }, 1500); 
+            toast.success("Registered Successfully!");
         })
         .catch(err => console.log(err))
+        toast.error("Fill out the form with the correct values!");
     }
     return (
       <div className="container mt-5 ">
+        <ToastContainer />
           <div className="row justify-content-center">
               <div className="col-md-4">
                   <div className="card">

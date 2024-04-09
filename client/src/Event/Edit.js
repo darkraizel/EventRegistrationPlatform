@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from "../navbar";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Edit() {
     const { _id } = useParams();
     const navigate = useNavigate();
-    const [data, setData] = useState({
-        eventName: '',
-        description: '',
-        location: '',
-        date: '',
-        organizer: ''
-    });
+    
     const [values, setValues] = useState({
         eventName: '',
         description: '',
@@ -25,9 +21,9 @@ function Edit() {
     useEffect(() => {
         axios.get(`http://localhost:8800/api/event/${_id}`)
             .then(res => {
-                setData(res.data);
+
                 setValues(res.data);
-                setLoading(false); // Set loading to false when data is fetched
+                setLoading(false);
 
                 const isOrganizer = res.data.organizer === localStorage.getItem('_id'); 
                 const isAdmin = localStorage.getItem('role') === 'admin';
@@ -47,9 +43,13 @@ function Edit() {
         axios.put(`http://localhost:8800/api/event/${_id}`, values)
             .then(res => {
                 console.log(res);
-                navigate('/home');
+                setTimeout(() => {
+                    navigate('/home');
+                }, 1500); 
+                toast.success("Event updated Successfully!");
             })
             .catch(err => console.log(err));
+            
     };
     
 
@@ -71,6 +71,7 @@ function Edit() {
 
     return (
         <div>
+            <ToastContainer/>
         <Navbar />
         <div className='d-flex w-100 vh-100 justify-content-center align-items-center bg-light'>
             <div className='w-50 border bg-white shadow px-5 pt-3 pb-5 rounded'>

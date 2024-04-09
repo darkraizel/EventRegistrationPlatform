@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
     const [data, setData] = useState([]);
@@ -10,8 +12,8 @@ function Home() {
                 // Map over the response data and create a new array with the required fields
                 const formattedData = res.data.map(item => ({
                     _id: item._id,
-                    attendee: item.attendee.name, // Use the attendee name instead of ID
-                    event: item.event.eventName, // Use the event name instead of ID
+                    attendee: item.attendee ? item.attendee.name : '', 
+                    event: item.event ? item.event.eventName : '', 
                 }));
                 setData(formattedData);
             })
@@ -25,11 +27,13 @@ function Home() {
                 .then(res => {
                     setData(prevData => prevData.filter(attendee => attendee._id !== _id));
                 }).catch(err => console.log(err));
+                toast.info("You deleted an attendee!")
         }
     }
 
     return (
         <div>
+            <ToastContainer/>
             <div className="d-flex">
                 <div className='d-flex flex-column justify-content-center align-items-center bg-light flex-grow-1'>
                     <h1>Attendees</h1>

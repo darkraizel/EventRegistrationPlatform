@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 function Users() {
     const [data, setData] = useState([]);
 
@@ -17,10 +19,13 @@ function Users() {
                 .then(res => {
                     setData(prevData => prevData.filter(user => user._id !== _id));
                 }).catch(err => console.log(err));
+                toast.info('User deleted successfully!')
         }
     }
     return (
+      
       <div className='d-flex flex-column justify-content-center align-items-center bg-light flex-grow-1 mt-4'>
+        <ToastContainer/>
       <h1>List of Users</h1>
       <div className='w-65 rounded bg-white border shadow p-4' style={{ margin: '0 auto', marginBottom: '20px' }}>
         <div className='d-flex justify-content-end'>

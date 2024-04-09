@@ -88,9 +88,7 @@ const getAllEvents = async (req, res) => {
 const eventRegister = async (req, res) => {
   try {
     const { eventId } = req.params; 
-    const userId = req.userId; 
-    console.log("User ID:", userId); // Log user ID for troubleshooting
-    
+    const userId = req.userId;     
     const existingAttendee = await Attendee.findOne({ event: eventId, attendee: userId });
     if (existingAttendee)
       return res.status(400).json({ message: "You are already registered for this event." });
