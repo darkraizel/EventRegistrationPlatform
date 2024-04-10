@@ -21,7 +21,7 @@ function Create() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8800/api/event', values, {
+        axios.post('https://localhost:8800/api/event', values, {
             headers: {
                 'Authorization': `Bearer ${token}` 
             } 

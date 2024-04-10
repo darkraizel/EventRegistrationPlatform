@@ -12,7 +12,7 @@ function Login() {
     const handleSubmit = (e) => {
       e.preventDefault();
     
-      axios.post('http://localhost:8800/api/auth/login', { name, password })
+      axios.post('https://localhost:8800/api/auth/login', { name, password })
   .then((response) => {
     const { data } = response;
     if (data && data.user && data.token) {

@@ -8,14 +8,14 @@ function Users() {
 
     useEffect(() => {
         
-        axios.get('http://localhost:8800/api/user')
+        axios.get('https://localhost:8800/api/user')
             .then(res => setData(res.data))
             .catch(err => console.log(err));
     }, []);
     const handleDelete = (_id) => {
         const confirm = window.confirm("Would you like to delete the User?");
         if (confirm) {
-            axios.delete(`http://localhost:8800/api/user/${_id}`)
+            axios.delete(`https://localhost:8800/api/user/${_id}`)
                 .then(res => {
                     setData(prevData => prevData.filter(user => user._id !== _id));
                 }).catch(err => console.log(err));

@@ -7,7 +7,7 @@ function Home() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8800/api/attendee')
+        axios.get('https://localhost:8800/api/attendee')
             .then(res => {
                 // Map over the response data and create a new array with the required fields
                 const formattedData = res.data.map(item => ({
@@ -23,7 +23,7 @@ function Home() {
     const handleDelete = (_id) => {
         const confirm = window.confirm("Would you like to delete the attendee?");
         if (confirm) {
-            axios.delete(`http://localhost:8800/api/attendee/${_id}`)
+            axios.delete(`https://localhost:8800/api/attendee/${_id}`)
                 .then(res => {
                     setData(prevData => prevData.filter(attendee => attendee._id !== _id));
                 }).catch(err => console.log(err));
