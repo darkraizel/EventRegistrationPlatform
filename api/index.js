@@ -8,6 +8,7 @@ import authRoute from "./routes/auth.js";
 import userRoute from "./routes/user.js";
 import eventRoute from "./routes/event.js";
 import attendeeRoute from "./routes/attendee.js"
+import corsOptions from "./config/allowedOrigins.js"
 
 
 
@@ -50,10 +51,13 @@ app.use(session({
         
     }
 }))
+app.use(cors(corsOptions))
 app.use("/api/auth", authRoute,);
 app.use("/api/user", userRoute);
 app.use("/api/event",  eventRoute);
 app.use("/api/attendee", attendeeRoute)
+
+
 
 
 
