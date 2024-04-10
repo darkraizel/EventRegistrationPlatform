@@ -35,7 +35,7 @@ app.listen(8800, ()=>{
 
 //midlewares
 app.use(cors({
-    origin: ["https://zeqillarishpk.com"],
+    origin: ["http://localhost:3000"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
