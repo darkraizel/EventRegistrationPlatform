@@ -1,6 +1,6 @@
 const allowedOrigins = [
     'https://darkraizel.github.io/',
-    'http://localhost3000/'
+    'https://localhost:3000/'
 ]
 
 
