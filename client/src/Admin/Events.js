@@ -12,7 +12,7 @@ function Events(){
 
 
 
-        axios.get('https://localhost:8800/api/event')
+        axios.get('http://localhost:8800/api/event')
             .then(res => setData(res.data))
             .catch(err => console.log(err));
     }, []);
@@ -20,7 +20,7 @@ function Events(){
     const handleDelete = (_id) => {
         const confirm = window.confirm("Would you like to delete the event?");
         if (confirm) {
-            axios.delete(`https://localhost:8800/api/event/${_id}`)
+            axios.delete(`http://localhost:8800/api/event/${_id}`)
                 .then(res => {
                     setData(prevData => prevData.filter(event => event._id !== _id));
                 }).catch(err => console.log(err));

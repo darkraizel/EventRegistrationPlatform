@@ -14,7 +14,7 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('https://localhost:8800/api/auth/register', {name, email, password})
+        axios.post('http://localhost:8800/api/auth/register', {name, email, password})
             .then(result => {
                 console.log(result);
                 setTimeout(() => {

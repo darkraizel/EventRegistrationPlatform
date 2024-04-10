@@ -12,18 +12,18 @@ function Read() {
     const { _id } = useParams();
 
     useEffect(() => {
-        axios.get(`https://localhost:8800/api/event/` + _id)
+        axios.get(`http://localhost:8800/api/event/` + _id)
             .then(res => setData(res.data))
             .catch(error => console.error('Error fetching event details:', error));
 
-        axios.get(`https://localhost:8800/api/event/${_id}/attendees`)
+        axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
             .then(res => setAttendees(res.data))
             .catch(error => console.error('Error fetching attendees:', error));
     }, [_id]);
 
     useEffect(() => {
         if (data.organizer) {
-            axios.get(`https://localhost:8800/api/user/` + data.organizer)
+            axios.get(`http://localhost:8800/api/user/` + data.organizer)
                 .then(res => setOrganizerName(res.data.name))
                 .catch(error => console.error('Error fetching organizer details:', error));
         }
@@ -37,7 +37,7 @@ function Read() {
                 return;
             }
         
-            await axios.post(`https://localhost:8800/api/event/${_id}/register`, {}, {
+            await axios.post(`http://localhost:8800/api/event/${_id}/register`, {}, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -45,7 +45,7 @@ function Read() {
 
             toast.success("Registered successfully!");
 
-            axios.get(`https://localhost:8800/api/event/${_id}/attendees`)
+            axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
                 .then(res => setAttendees(res.data))
                 .catch(error => console.error('Error refreshing attendees:', error));
         } catch (error) {
@@ -62,7 +62,7 @@ function Read() {
                 return;
             }
 
-            await axios.delete(`https://localhost:8800/api/event/${_id}/deregister`, {
+            await axios.delete(`http://localhost:8800/api/event/${_id}/deregister`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -70,7 +70,7 @@ function Read() {
 
             toast.info("Unsubscribed successfully!");
             
-            axios.get(`https://localhost:8800/api/event/${_id}/attendees`)
+            axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
                 .then(res => setAttendees(res.data))
                 .catch(error => console.error('Error refreshing attendees:', error));
         } catch (error) {

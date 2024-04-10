@@ -18,7 +18,7 @@ function UserEdit() {
 
 
     useEffect(() => {
-        axios.get(`https://localhost:8800/api/user/${userId}`)
+        axios.get(`http://localhost:8800/api/user/${userId}`)
             .then(res => {
                 if (res.data) {
                     setValues(res.data); // Update values state with fetched data
@@ -32,7 +32,7 @@ function UserEdit() {
     }, [userId]);
     const handleUpdate = (event) => {
         event.preventDefault();
-        axios.put(`https://localhost:8800/api/user/${userId}`, values)
+        axios.put(`http://localhost:8800/api/user/${userId}`, values)
             .then(res => {
                 console.log(res);
                 setTimeout(() => {
