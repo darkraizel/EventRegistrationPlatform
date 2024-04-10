@@ -12,19 +12,25 @@ function Signup() {
     const [password, setPassword] = useState()
     const navigate = useNavigate()
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
+    const handleSubmit = (e) => {
+        e.preventDefault();
         axios.post('http://localhost:8800/api/auth/register', {name, email, password})
-        .then(result => {
-            console.log(result)
-            setTimeout(() => {
-                navigate('/login');
-            }, 1500); 
-            toast.success("Registered Successfully!");
-        })
-        .catch(err => console.log(err))
-        toast.error("Fill out the form with the correct values!");
-    }
+            .then(result => {
+                console.log(result);
+                setTimeout(() => {
+                    navigate('/login');
+                }, 1500);
+                toast.success("Registered Successfully!");
+            })
+            .catch(err => {
+                console.log(err);
+                if (err.response && err.response.status === 409) {
+                    toast.error("User already exists. Please choose a different email.");
+                } else {
+                    toast.error("Fill out the form with the correct values!");
+                }
+            });
+    };
     return (
       <div className="container mt-5 ">
         <ToastContainer />

@@ -6,17 +6,18 @@ function Sidebar() {
     
     return (
       <div className='d-flex flex-column justify-content-space-between bg-dark text-white p-4 vh-100'>
-        <Link to="/admin" className="d-flex align-items-center text-white text-decoration-none mb-4" >
+       <div className="d-flex align-items-center text-white text-decoration-none mb-4" >
           <i className='bi bi-bootstrap fs-5 me-2'></i>
           <span className='fs-4'>Admin</span>
-        </Link>
+          </div>
+        
         <hr className='text-secondary mb-4'/>
         <ul className='nav flex-column p-0 m-0'>
           <li className='nav-item'>
-            <Link to="/admin" className='nav-link text-white' >
+            <div className='nav-link text-white' >
               <i className='bi bi-speedometer me-2 fs-5'></i>
               <span className='fs-5'>Dashboard</span>
-            </Link>
+              </div>
           </li>
           <li className='nav-item'>
             <Link to="/admin/users" className='nav-link text-white'>

@@ -5,21 +5,23 @@ import jwt from "jsonwebtoken";
 
 
 
-export const register = async (req,res,next)=>{
-    try{
-        
+export const register = async (req, res, next) => {
+    try {
+        const existingUser = await User.findOne({ email: req.body.email });
+        if (existingUser) {
+          
+            return res.status(409).send("User already exists. Please choose a different email.");
+        }
         const newUser = new User({
-            name:req.body.name,
+            name: req.body.name,
             password: req.body.password,
-            email:req.body.email,
-            
+            email: req.body.email,
         });
         await newUser.save();
         res.status(201).send("User has been created.");
-
-    }catch(err){
+    } catch (err) {
         next(err);
-}
+    }
 };
 
 
