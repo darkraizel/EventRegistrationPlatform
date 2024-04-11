@@ -132,7 +132,6 @@ function Read() {
                                         <td>{attendee.attendee.name}</td>
                                         <td>              
                                         </td>
-                                        {/* Add action button(s) if needed */}
                                     </tr>
                                 ))}
                             </tbody>
