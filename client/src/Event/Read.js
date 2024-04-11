@@ -9,7 +9,19 @@ function Read() {
     const [data, setData] = useState({});
     const [attendees, setAttendees] = useState([]);
     const [organizerName, setOrganizerName] = useState('');
+    const [organizerId, setOrganizerId] = useState('');
     const { _id } = useParams();
+    const loggedInUserId = localStorage.getItem('_id');
+    const [isAdmin, setIsAdmin] = useState(false);
+    //effect for admin role and organizer
+    useEffect(() => {
+        if (data.organizer) {
+            setOrganizerId(data.organizer);
+        }
+        const role = localStorage.getItem('role');
+        setIsAdmin(role === 'admin');
+
+    }, [data.organizer]);
 
     useEffect(() => {
         axios.get(`http://localhost:8800/api/event/` + _id)
@@ -105,14 +117,28 @@ function Read() {
                     <button onClick={handleAttendEvent} className='btn btn-success ms-3'>Attend</button>
                     <button onClick={handleUnsubscribe} className='btn btn-sm btn-danger ms-3'>Unsubscribe</button>
                 </div>
-                <div className='w-40 border bg-white shadow px-5 pt-3 pb-5 rounded ms-5'>
-                    <h3>Attendees</h3>
-                    <ul>
-                        {attendees.map((attendee, index) => (
-                            <li key={index}>{attendee.attendee.name}</li>
-                        ))}
-                    </ul>
-                </div>
+                {(isAdmin || organizerId === loggedInUserId) && attendees.length > 0 && (
+                    <div className='w-40 border bg-white shadow px-5 pt-3 pb-5 rounded ms-5'>
+                        <h3>Attendees</h3>
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {attendees.map((attendee, index) => (
+                                    <tr key={index}>
+                                        <td>{attendee.attendee.name}</td>
+                                        <td>              
+                                        </td>
+                                        {/* Add action button(s) if needed */}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </div>
     );
