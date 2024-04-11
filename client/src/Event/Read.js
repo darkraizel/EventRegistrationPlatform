@@ -91,6 +91,31 @@ function Read() {
     };
     const formattedDate = new Date(data.date).toLocaleDateString();
 
+    const handleDeleteAttendee = async (attendeeId) => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Error deleting attendee: Token not found in local storage');
+                return;
+            }
+    
+            await axios.delete(`http://localhost:8800/api/event/${_id}/attendees/${attendeeId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            toast.info("Attendee deleted successfully!");
+    
+            axios.get(`http://localhost:8800/api/event/${_id}/attendees`)
+                .then(res => setAttendees(res.data))
+                .catch(error => console.error('Error refreshing attendees:', error));
+        } catch (error) {
+            console.error('Error deleting attendee:', error.response ? error.response.data.message : error.message);
+            toast.error("Failed to delete attendee!");
+        }
+    };
+
     return (
         <div>
             <ToastContainer />
@@ -124,15 +149,16 @@ function Read() {
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {attendees.map((attendee, index) => (
                                     <tr key={index}>
                                         <td>{attendee.attendee.name}</td>
-                                        <td>              
+                                        <td>
+                                        <button onClick={() => handleDeleteAttendee(attendee._id)} className='btn btn-sm btn-danger'>Delete</button>              
                                         </td>
-                                        {/* Add action button(s) if needed */}
                                     </tr>
                                 ))}
                             </tbody>
