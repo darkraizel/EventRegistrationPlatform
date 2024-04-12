@@ -42,7 +42,7 @@ function Home() {
           <Navbar />
           <div className="d-flex">
             {isAdmin && <Sidebar />} 
-            <div className='d-flex flex-column justify-content-center align-items-center bg-light flex-grow-1'>
+            <div data-testid="event" className='d-flex flex-column justify-content-center align-items-center bg-light flex-grow-1'>
               <h1>List of Events</h1>
               <div className='w-65 rounded bg-white border shadow p-4'>
                 <div className='d-flex justify-content-end'>

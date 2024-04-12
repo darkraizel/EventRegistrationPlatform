@@ -41,7 +41,7 @@ function Login() {
   
     return (
       
-      <div className="signup-container d-flex justify-content-center align-items-center vh-100">
+      <div data-testid="cypress-div" className="signup-container d-flex justify-content-center align-items-center vh-100">
         <ToastContainer />
           <div className="w-40 p-5 rounded border text-center">
               <h2>Login</h2>
@@ -52,6 +52,7 @@ function Login() {
                           type="text"
                           className="form-control"
                           id="name"
+                          data-testid="#username"
                           required
                           onChange={(e) => setName(e.target.value)}
                       />
@@ -62,6 +63,7 @@ function Login() {
                           type="password"
                           className="form-control"
                           id="password"
+                          data-testid="#password"
                           required
                           onChange={(e) => setPassword(e.target.value)}
                       />

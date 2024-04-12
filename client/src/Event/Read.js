@@ -121,7 +121,7 @@ function Read() {
             <ToastContainer />
             <Navbar />
             <div className='d-flex w-60 vh-100 justify-content-center align-items-center bg-light'>
-                <div className='w-40 border bg-white shadow px-5 pt-3 pb-5 rounded'>
+                <div  className='w-40 border bg-white shadow px-5 pt-3 pb-5 rounded'>
                     <h3>Event Details</h3>
                     <div className='mb-2'>
                         <strong>Event Name: {data.eventName}</strong>
